@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package gestorAplicacion;
+package Cinen;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class Silla {
     
     private boolean danada=false;
     
-    private Cliente clientes;
+    public Cliente clientes;
 
     
     public Silla( int numero, String tipo, String ubicacion, Cliente cliente )
@@ -50,10 +50,15 @@ public class Silla {
     
     public boolean sillaAsignada( )
     {
-        if( null == clientes )
+        if( null == clientes ){
             return false;
-        else
+        }
+            
+        else{
+            
             return true;
+        }
+            
     }
 
     
@@ -95,9 +100,10 @@ public class Silla {
         return danada;
     }
 
-    public void setDanada(boolean danada) {
-        this.danada = danada;
+    public void setDanada(boolean dañada) {
+        this.danada = dañada;
     }
     
     
 }
+    

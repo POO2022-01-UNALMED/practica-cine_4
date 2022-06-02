@@ -1,4 +1,4 @@
-package gestorAplicacion;
+package Cinen;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -26,13 +26,13 @@ public class Sala {
     
     //Creacion del objeto sala, se le pasa un array de sillas, la pelicula, y tipo si es 3D o 2D
     
-    public Sala(String tipo, ArrayList<Silla> sillas, Pelicula pelicula,ArrayList<Trabajador> trabajadores, int numero,int basura) {
+    public Sala(String tipo, ArrayList<Silla> sillas, Pelicula pelicula,ArrayList<Trabajador> trabajadores, int numero) {
 		this.tipo = tipo;
 		this.sillas = sillas;
 		this.pelicula = pelicula;
-        this.trabajadores = trabajadores;
+                this.trabajadores = trabajadores;
 		this.numero = numero;
-		this.basura = basura;
+		this.basura = 0;
 
 	}
 
