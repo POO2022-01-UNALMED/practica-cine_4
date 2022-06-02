@@ -1,5 +1,5 @@
-package uiMain;
-import gestorAplicacion.*;
+
+package Cinen;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,14 +14,13 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       // TODO code application logic here
         ArrayList<Cliente> clientes = new ArrayList<Cliente>();
         ArrayList<Trabajador> trabajadores = new ArrayList<Trabajador>();
-        ArrayList<Trabajador> varTrabajadores = new ArrayList<Trabajador>();
-
         ArrayList<Sala> salas = new ArrayList<Sala>();
         Cartelera cartelera = new Cartelera(null );
         Funcionalidades funcionalidades =new Funcionalidades();
+       
         
 
         try (Scanner entrada = new Scanner(System.in)) {
@@ -155,15 +154,48 @@ public class NewMain {
 
                             case 5:
                                 cartelera = funcionalidades.inicializarCartelera();
-                                trabajadores = funcionalidades.inicializarTrabajdores();
-                                varTrabajadores = funcionalidades.trabajdoresEmpleadosPlanta(trabajadores);
-                                salas = funcionalidades.inicializarSalas(cartelera,varTrabajadores);
+                                salas = funcionalidades.inicializarSalas(cartelera);
                                 System.out.println("Se ha iniciado existosamente las salas");
+                                trabajadores = funcionalidades.inicializarTrabajdores();
+                                salas = funcionalidades.agregarTrabajadores(salas,trabajadores);
                                 System.out.println("Se ha inicializado correctamente el cine");
                                 break;
                             case 6:
-                                
-                                break;
+                               System.out.print("\n\t.:Integridad de Sala:.\t\n");
+                               System.out.print("1.Ver estado de la silla \n");
+                               System.out.print("2.Modificar el estado de la silla\n");
+                               
+                               int opcione = entrada.nextInt();
+                               if(opcione==1){
+                                   System.out.print("Ingrese numero de la sala \n");
+                                   int sala = entrada.nextInt();
+                                   System.out.print("Ingrese numero de la silla \n");
+                                   int silla = entrada.nextInt();
+                                   
+                                   System.out.println(funcionalidades.integridadSilla(sala, silla, opcione, opcione));
+                               }
+                               else{
+                                   System.out.print("1.Reparar silla \n");
+                                   System.out.print("2.Dañar silla \n");
+                                   int opcion1 = entrada.nextInt();
+                                   System.out.print("Ingrese numero de la sala \n");
+                                   int sala = entrada.nextInt();
+                                   System.out.print("Ingrese numero de la silla \n");
+                                   int silla = entrada.nextInt();
+                                   
+                                   System.out.print(funcionalidades.integridadSilla(sala, silla, opcione, opcion1));
+                                   
+                               }
+                               System.out.print("\n\t.:Volver al menu:.\t\n");
+                               System.out.print("1. si\n");
+                               System.out.print("2. no\n");
+                               
+                               int salir = entrada.nextInt();
+                               if (salir==1){
+                                   break;
+                               }else{
+                                   break;
+                               }
                             
                             case 7:
                                 break;
@@ -185,6 +217,13 @@ public class NewMain {
                 System.out.println("Clave incorrecta hasta luego");
             }
         }
+        
+       
+       
+      
+    
+    
+      
     }
 }
 
