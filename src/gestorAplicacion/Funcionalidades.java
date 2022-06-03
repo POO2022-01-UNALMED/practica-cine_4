@@ -1,37 +1,34 @@
 package Cinen;
 
 import java.util.ArrayList;
-
- 
+import java.util.Random;
 
 public class Funcionalidades {
-    ArrayList<Sala> salas = new ArrayList<Sala>();
-    ArrayList<Silla> sillas = new ArrayList<Silla>();
-    
-    public ArrayList<Sala> inicializarSalas(Cartelera cartelera){
+    public ArrayList<Sala>inicializarSalas(Cartelera cartelera){
         int numeroSillas;
         numeroSillas = 240;
-        
+
+        ArrayList<Silla> sillas = new ArrayList<Silla>();
+        ArrayList<Sala> salas = new ArrayList<Sala>();
         ArrayList<Trabajador> trabajadores = new ArrayList<Trabajador>();
-        
         Cliente varInicializacionCliente = new Cliente(100065534, 0, "NA", "NA", 0, 0);
     
         for (int i = 0; i < numeroSillas; i++) {
             if (i>=0 && i<=80) {
                 Silla silla = new Silla(i, "Economica", "Lateral Izquierdo",varInicializacionCliente);
-                this.sillas.add(silla);
+                sillas.add(silla);
 
                 
             } 
             else if (i>=80 && i<=160) {
                 Silla silla = new Silla(i, "Vip", "Central",varInicializacionCliente);
-                this.sillas.add(silla);
+                sillas.add(silla);
 
                 
             }
             else if (i>=160 && i<=240) {
                 Silla silla = new Silla(i, "Economica", "Lateral derecho",varInicializacionCliente);
-                this.sillas.add(silla);
+                sillas.add(silla);
 
 
             }
@@ -47,52 +44,17 @@ public class Funcionalidades {
         for (int index = 0; index < varNumeroSalas; index++) {
 
             if(index>0 && index<5){
-                Sala sala = new Sala("3D", this.sillas, varPelis.get(index),trabajadores,index);
-                this.salas.add(sala);
+                Sala sala = new Sala("3D", sillas, varPelis.get(index),trabajadores,index,0);
+                salas.add(sala);
             }
             else{
-                Sala sala = new Sala("2D", this.sillas, varPelis.get(index),trabajadores,index);
-                this.salas.add(sala);
+                Sala sala = new Sala("2D", sillas, varPelis.get(index),trabajadores,index,0);
+                salas.add(sala);
             }
         }
-        return this.salas;
+        return salas;
 
     }
-    
-    
-    public String integridadSilla(int sala, int silla, int opcion,int opcion1){
-        String a=null;
-        boolean sil=false;
-        for (int indexS = 1; indexS <= this.salas.size(); indexS++) {
-            for (int indexSll = 0; indexSll < this.sillas.size(); indexSll++) {
-                Silla sila = this.sillas.get(indexSll);
-                if(sala==indexS && silla==indexSll){ 
-                    if(opcion==1){
-                        if(sila.isDanada()==false){
-                            a="Esta Buena";                    
-                        }
-                        else{
-                             a="Esta Mala";
-                        }
-                    }else{
-                        if (opcion1==1){
-                            sila.setDanada(true);
-                            a="Se arreglo";
-                        } else{
-                            sila.setDanada(false);
-                            a="Se daño";
-                        }
-                }
-                
-            }
-          }
-                     
-        }
-        return a;
-    }
-    
-    
-   
 
     public Cartelera inicializarCartelera(){
         ArrayList<Pelicula> pelis = new ArrayList<>();
@@ -156,6 +118,31 @@ public class Funcionalidades {
 
 
     }
+    
+    
+     public String danarSilla(int sala, ArrayList<Sala> salas){
+        String a=null;
+        Random rnd = new Random();
+        int randon =(int)(rnd.nextDouble() * 239+1);
+        
+        for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
+            
+                Sala sal = salas.get(indexS);
+            
+            for (int indexSll = 1; indexSll <= sal.getSillas().size()-1; indexSll++) {
+                Silla sila = sal.getSillas().get(indexSll);
+                if (indexSll==randon){
+                    sila.setDanada(false);
+                    a="Se descompuso";
+                }
+                
+                     
+                }
+        }
+        return a+randon;
+    }
+     
+     
 
     
 }
