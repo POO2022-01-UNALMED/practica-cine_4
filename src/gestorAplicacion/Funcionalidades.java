@@ -141,7 +141,7 @@ public class Funcionalidades {
                      
                 }
         }
-        return a+" la silla: "+randon;
+        return a+" la silla: "+randon+"sala:"+randonS;
         
         
     }
@@ -157,7 +157,7 @@ public class Funcionalidades {
             
             for (int indexSll = 1; indexSll <= sal.getSillas().size()-1; indexSll++) {
                 Silla sila = sal.getSillas().get(indexSll);
-                if (indexSll==silla){
+                if (indexSll==silla && sala==indexS){
                     sila.setDanada(false);
                     a="Se arreglado";
                 }
@@ -169,6 +169,63 @@ public class Funcionalidades {
     }
     
     
+    public String devolucion(Cliente cliente1, ArrayList<Sala> salas){
+        
+        String a=null;
+        Cliente varInicializacionCliente = new Cliente(100065534, 0, "NA", "NA", 0, 0);
+        
+        for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
+            
+                Sala sal = salas.get(indexS);
+            
+            for (int indexSll = 1; indexSll <= sal.getSillas().size()-1; indexSll++) {
+                Silla sila = sal.getSillas().get(indexSll);
+                
+                if(cliente1.getCedula()==sila.getCliente().getCedula()){
+                    a="Devolcion exitosa";
+                    sila.setClientes(varInicializacionCliente);
+                    
+                        
+                    
+                }
+                else if(a==null) {
+                    a="No esta asigado";
+                    
+                }
+            }
+        }
+                
+    return a;
+   }
+    
+    public Silla asiganarCliente(int sala, int silla,Cliente cliente, ArrayList<Sala> salas){
+        
+           
+        
+        Silla a=null;
+        
+        
+        for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
+            
+                Sala sal = salas.get(indexS);
+            
+            for (int indexSll = 1; indexSll <= sal.getSillas().size()-1; indexSll++) {
+                Silla sila = sal.getSillas().get(indexSll);
+                
+                if(sala==indexS && indexSll==silla){
+                    a=sila;
+                    sila.asignarAcliente(cliente);
+                    
+                }else if (a==null){
+                    a=sila;
+                    
+                }
+                
+            }
+        }
+                
+    return a;
+   }
     
 }
 
