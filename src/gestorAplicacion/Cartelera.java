@@ -1,8 +1,11 @@
+package gestorAplicacion;
 
 import java.util.ArrayList;
 
 
 public class Cartelera {
+    
+    
   private ArrayList<Pelicula> pelis= new ArrayList<>();
   
   public Cartelera(ArrayList<Pelicula> pelis){

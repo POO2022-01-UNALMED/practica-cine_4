@@ -1,9 +1,10 @@
-
+package gestorAplicacion;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Funcionalidades {
+    
     public ArrayList<Sala>inicializarSalas(Cartelera cartelera){
         int numeroSillas;
         numeroSillas = 240;
