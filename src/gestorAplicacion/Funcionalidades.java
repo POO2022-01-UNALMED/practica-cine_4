@@ -125,7 +125,7 @@ public class Funcionalidades {
         Random rnd = new Random();
         int randon =(int)(rnd.nextDouble() * 239+0);
         Random rndS = new Random();
-        int randonS =(int)(rnd.nextDouble() * 9+0);
+        int randonS =(int)(rndS.nextDouble() * 9+0);
         
         for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
             
