@@ -25,6 +25,8 @@ public class Cartelera {
             cartelra.pelis.remove(sal);
             cartelra.pelis.add(peli);
             a="Cambio Exitoso";
+        }else{
+            a="no existe";
         }
         
             
@@ -53,6 +55,7 @@ public class Cartelera {
                                "\n";
         pelis.add(a);            
     }
+    
     for (int index = 0; index <pelis.size(); index++) {
       System.out.println(pelis.get(index));
     }

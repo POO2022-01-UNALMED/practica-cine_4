@@ -120,28 +120,54 @@ public class Funcionalidades {
     }
     
     
-     public String danarSilla( ArrayList<Sala> salas){
+     public String danarSilla(int s,ArrayList<Sala> salas){
         String a=null;
         Random rnd = new Random();
         int randon =(int)(rnd.nextDouble() * 239+0);
-        Random rndS = new Random();
-        int randonS =(int)(rndS.nextDouble() * 9+0);
         
+        int c=0;
         for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
             
                 Sala sal = salas.get(indexS);
             
             for (int indexSll = 1; indexSll <= sal.getSillas().size()-1; indexSll++) {
                 Silla sila = sal.getSillas().get(indexSll);
-                if (indexSll==randon && randonS==indexS){
-                    sila.setDanada(false);
+                
+                if (indexSll==randon && s==indexS){
+                    sila.setDanada(true);
                     a="Se descompuso";
+                    c++;
                 }
                 
                      
                 }
         }
-        return a+" la silla: "+randon+"sala:"+randonS;
+        return a+""+" la silla: "+" "+randon+" sala: "+s;
+        
+        
+    }
+     public String danarSilla(int s,int silla,ArrayList<Sala> salas){
+        String a=null;
+       
+        
+        int c=0;
+        for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
+            
+                Sala sal = salas.get(indexS);
+            
+            for (int indexSll = 1; indexSll <= sal.getSillas().size()-1; indexSll++) {
+                Silla sila = sal.getSillas().get(indexSll);
+                
+                if (indexSll==silla && s==indexS){
+                    sila.setDanada(true);
+                    a="Se descompuso";
+                    c++;
+                }
+                
+                     
+                }
+        }
+        return a+""+" la silla: "+" "+silla+" sala: "+s;
         
         
     }
@@ -164,6 +190,32 @@ public class Funcionalidades {
                 
                      
                 }
+        }
+        return a;
+    }
+     public String vericarSilla(int s,ArrayList<Sala> salas){
+        String a=null;
+        ArrayList<Silla> sillas = new ArrayList<Silla>();
+        ArrayList<Sala> sala = new ArrayList<Sala>();
+        ArrayList<String> print = new ArrayList<String>();
+        
+        for (int indexS = 0; indexS <= salas.size()-1; indexS++) {
+            
+                Sala sal = salas.get(indexS);
+            
+            for (int indexSll = 0; indexSll <= sal.getSillas().size()-1; indexSll++) {
+                Silla sila = sal.getSillas().get(indexSll);
+                
+                if (sila.isDanada()==true && s==indexS ){
+                    a="la silla: "+sila.getNumero()+" esta dañada";
+                   
+                }
+      
+                     
+                }
+        }
+        if(a==null){
+            a="Estan bien";
         }
         return a;
     }
@@ -198,11 +250,15 @@ public class Funcionalidades {
     return a;
    }
     
-    public Silla asiganarCliente(int sala, int silla,Cliente cliente, ArrayList<Sala> salas){
+    
+    
+    
+    
+    public String asiganarCliente(int sala, int silla,Cliente cliente, ArrayList<Sala> salas){
         
            
         
-        Silla a=null;
+        String a=null;
         
         
         for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
@@ -213,11 +269,16 @@ public class Funcionalidades {
                 Silla sila = sal.getSillas().get(indexSll);
                 
                 if(sala==indexS && indexSll==silla){
-                    a=sila;
+                    a="Silla:"+ sila.getNumero()
+                            +"\nSala: "+ sala
+                             +"\nTipo: "+ sila.getTipo()
+                                +"\nUbicacion: "+ sila.getUbicacion()
+                                    +"\nUsuaio: "+ sila.getCliente().getNombre();
+                    
                     sila.asignarAcliente(cliente);
                     
                 }else if (a==null){
-                    a=sila;
+                    a=" Nadie";
                     
                 }
                 
