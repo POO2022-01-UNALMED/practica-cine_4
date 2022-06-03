@@ -1,4 +1,4 @@
-package gestorAplicacion;
+package Cinen;
 import java.util.ArrayList;
 
 
@@ -47,22 +47,24 @@ public class Cartelera {
   public boolean confirmarPelicula(Cartelera cart, String busqueda){
     boolean varConfirmarPelicula = false;
     ArrayList<Pelicula> varPeliculas = new ArrayList<>();
-    busqueda = busqueda.toLowerCase();
-    String varPelicula;
+    varPeliculas = cart.getPelis();
+    busqueda= busqueda.toLowerCase();
+
 
       
-    for (Pelicula peli: cart.getPelis()) {
-      varPelicula = peli.getNombre();
-      varPelicula.toLowerCase();
-      if (varPelicula == busqueda) {
+    for (int i = 0; i < varPeliculas.size(); i++) {
+      String varNombre = varPeliculas.get(i).getNombre().toLowerCase();
+    
+      if (varNombre == busqueda) {
         varConfirmarPelicula = true;
         break;
+      } else {
+       varConfirmarPelicula = false;
+        
         
       }
       
     }
-      
-
     return varConfirmarPelicula;
   }
     

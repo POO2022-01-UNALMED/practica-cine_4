@@ -1,4 +1,5 @@
-package gestorAplicacion;
+package Cinen;
+
 
 public class Persona {
     private int cedula;

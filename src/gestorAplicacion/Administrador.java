@@ -4,7 +4,7 @@
  */
 
 
-package gestorAplicacion;
+package Cinen;
 
 import java.util.ArrayList;
 

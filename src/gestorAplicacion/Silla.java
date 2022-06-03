@@ -24,7 +24,7 @@ public class Silla {
     
     private boolean danada=false;
     
-    public Cliente clientes;
+    private Cliente clientes;
 
     
     public Silla( int numero, String tipo, String ubicacion, Cliente cliente )
@@ -50,15 +50,10 @@ public class Silla {
     
     public boolean sillaAsignada( )
     {
-        if( null == clientes ){
+        if( null == clientes )
             return false;
-        }
-            
-        else{
-            
+        else
             return true;
-        }
-            
     }
 
     
