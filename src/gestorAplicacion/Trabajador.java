@@ -1,4 +1,4 @@
-package Cinen;
+
 
 public class Trabajador extends Persona {
     private String cargo;
