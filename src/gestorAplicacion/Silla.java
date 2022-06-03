@@ -98,6 +98,10 @@ public class Silla {
     public void setDanada(boolean dañada) {
         this.danada = dañada;
     }
+
+    public void setClientes(Cliente clientes) {
+        this.clientes = clientes;
+    }
     
     
 }
