@@ -31,7 +31,7 @@ public class Pelicula {
         
 	@Override
    public String toString(){
-        String varImpr = "Se ha agregado satisfactoriamente una pelicula" ;
+        String varImpr = "Nombre: "+nombre;
         return varImpr;
    }
    

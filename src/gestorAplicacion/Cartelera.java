@@ -15,9 +15,23 @@ public class Cartelera {
 
 
 
-  public void cambiarPelicula(String nombre) {
-    ArrayList<Pelicula> varCartelera;
-    varCartelera = this.getPelis();}
+  public String cambiarPelicula(String nombre, Pelicula peli, Cartelera cartelra) {
+    String a="";
+    
+    for (int indexS = 0; indexS <= cartelra.pelis.size()-1; indexS++) {
+        Pelicula sal = cartelra.pelis.get(indexS);
+        if (sal.getNombre()==nombre){
+             a=sal.getNombre()+"";
+            cartelra.pelis.remove(sal);
+            cartelra.pelis.add(peli);
+            a="Cambio Exitoso";
+        }
+        
+            
+        }
+    return a;
+    }
+    
 
 
 
