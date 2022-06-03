@@ -31,6 +31,10 @@ public class Silla {
         this.clientes = cliente;
     }
 
+    public Silla() {
+        this.numero=-1;
+    }
+
     
     public void asignarAcliente( Cliente cliente)
     {

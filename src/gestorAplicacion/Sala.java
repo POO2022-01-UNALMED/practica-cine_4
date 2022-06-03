@@ -15,9 +15,11 @@ public class Sala {
     
     private ArrayList<Trabajador> trabajadores;
 
-	private int numero;
+    private int numero;
 
-	private int basura;
+    private int basura;
+    
+    
     
 
     
@@ -30,12 +32,19 @@ public class Sala {
 		this.tipo = tipo;
 		this.sillas = sillas;
 		this.pelicula = pelicula;
-        this.trabajadores = trabajadores;
+                this.trabajadores = trabajadores;
 		this.numero = numero;
 		this.basura = basura;
+                
 
 	}
 
+    public Sala() {
+        this.basura = 0;
+        
+    }
+        
+        
 
 
 
@@ -71,6 +80,8 @@ public class Sala {
 	public void setSillas(ArrayList<Silla> sillas) {
 		this.sillas = sillas;
 	}
+
+    
 
 
 

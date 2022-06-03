@@ -149,8 +149,7 @@ public class Funcionalidades {
     }
      public String danarSilla(int s,int silla,ArrayList<Sala> salas){
         String a=null;
-       
-        
+
         int c=0;
         for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
             
@@ -173,6 +172,7 @@ public class Funcionalidades {
         
     }
      
+    
      
     public String arreglarSilla(int sala, int silla, ArrayList<Sala> salas){
         String a=null;
@@ -194,27 +194,32 @@ public class Funcionalidades {
         }
         return a;
     }
+    
      public String vericarSilla(int s,ArrayList<Sala> salas){
         String a=null;
         ArrayList<Silla> sillas = new ArrayList<Silla>();
-        ArrayList<Sala> sala = new ArrayList<Sala>();
-        ArrayList<String> print = new ArrayList<String>();
+       
         
+        Sala sal= new Sala();
         for (int indexS = 0; indexS <= salas.size()-1; indexS++) {
-            
-                Sala sal = salas.get(indexS);
-            
-            for (int indexSll = 0; indexSll <= sal.getSillas().size()-1; indexSll++) {
-                Silla sila = sal.getSillas().get(indexSll);
+            if(s==indexS){
+                 sal= salas.get(indexS);
+                 sillas=sal.getSillas();
+
+            }
+        }
+    
+        for (int indexSll = 0; indexSll <= sillas.size()-1; indexSll++) {
+            Silla sila = sillas.get(indexSll);
                 
-                if (sila.isDanada()==true && s==indexS ){
+                if (sila.isDanada()==true ){
                     a="la silla: "+sila.getNumero()+" esta dañada";
                    
                 }
       
                      
                 }
-        }
+        
         if(a==null){
             a="Estan bien";
         }
@@ -254,40 +259,100 @@ public class Funcionalidades {
     
     
     
+ 
     
     public String asiganarCliente(int sala, int silla,Cliente cliente, ArrayList<Sala> salas){
         
-           
-        
+       
+        ArrayList<Silla> sillas = new ArrayList<Silla>();
         String a=null;
         
+        Sala sal= new Sala();
         
-        for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
-            
-                Sala sal = salas.get(indexS);
-            
-            for (int indexSll = 1; indexSll <= sal.getSillas().size()-1; indexSll++) {
-                Silla sila = sal.getSillas().get(indexSll);
+        
+        for (int indexS = 0; indexS <= salas.size()-1; indexS++) {
+            if(sala==indexS){
+                 sal= salas.get(indexS);
+                 sillas=sal.getSillas();
+                 
+                 
                 
-                if(sala==indexS && indexSll==silla){
-                    a="Silla:"+ sila.getNumero()
+            }
+        }
+ 
+        for (int indexSll = 0; indexSll <= sillas.size()-1; indexSll++) {
+            Silla sila = sillas.get(indexSll);
+            
+            if (sila.getNumero()==silla){
+                sila.asignarAcliente(cliente);
+                sal.setBasura(+1);
+                
+                a="Silla:"+ sila.getNumero()
                             +"\nSala: "+ sala
                              +"\nTipo: "+ sila.getTipo()
                                 +"\nUbicacion: "+ sila.getUbicacion()
                                     +"\nUsuaio: "+ sila.getCliente().getNombre();
-                    
-                    sila.asignarAcliente(cliente);
-                    
-                }else if (a==null){
-                    a=" Nadie";
+                  
+                 
+        
                     
                 }
+            
+            
                 
             }
-        }
+      
+        
                 
     return a;
    }
+   
+    
+    
+  
+    public ArrayList<String> contarSillasOcupadas(ArrayList<Sala> salas)
+    {
+        
+        ArrayList<Silla> sillas = new ArrayList<Silla>();
+        String a=null;
+        Sala sal= new Sala();
+        ArrayList<String> print = new ArrayList<String>();
+        
+        Silla si=new Silla();
+        for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
+            
+                sal = salas.get(indexS);
+            
+            for (int indexSll = 1; indexSll <= sal.getSillas().size()-1; indexSll++) {
+                Silla sila = sal.getSillas().get(indexSll);
+                
+                if(sila.getCliente().getNombre()!="NA")
+            {
+                si=sila;
+                a=si.getNumero()+" "+sal.getNumero();
+                
+                int posicion = sillas.indexOf(si); 
+                
+                if (posicion<0){
+                    sillas.add(sila);
+                    a="Total Ocupadas: "+sillas.size()+
+                            "\nNumero de silla: "+si.getNumero()+" "+"Sala: "+sal.getNumero();
+                    print.add(a);
+                    
+                    break;
+            } 
+            }
+              
+            }
+        
+        }
+     for (int index = 0; index <print.size(); index++) {
+      System.out.println(print.get(index));
+    }
+    return print;
+    }
+    
+    
     
 }
 
