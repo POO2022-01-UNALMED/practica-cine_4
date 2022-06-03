@@ -120,10 +120,12 @@ public class Funcionalidades {
     }
     
     
-     public String danarSilla(int sala, ArrayList<Sala> salas){
+     public String danarSilla( ArrayList<Sala> salas){
         String a=null;
         Random rnd = new Random();
-        int randon =(int)(rnd.nextDouble() * 239+1);
+        int randon =(int)(rnd.nextDouble() * 239+0);
+        Random rndS = new Random();
+        int randonS =(int)(rnd.nextDouble() * 9+0);
         
         for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
             
@@ -131,7 +133,7 @@ public class Funcionalidades {
             
             for (int indexSll = 1; indexSll <= sal.getSillas().size()-1; indexSll++) {
                 Silla sila = sal.getSillas().get(indexSll);
-                if (indexSll==randon){
+                if (indexSll==randon && randonS==indexS){
                     sila.setDanada(false);
                     a="Se descompuso";
                 }
@@ -139,11 +141,34 @@ public class Funcionalidades {
                      
                 }
         }
-        return a+randon;
+        return a+" la silla: "+randon;
+        
+        
     }
      
      
-
+    public String arreglarSilla(int sala, int silla, ArrayList<Sala> salas){
+        String a=null;
+        
+        
+        for (int indexS = 1; indexS <= salas.size()-1; indexS++) {
+            
+                Sala sal = salas.get(indexS);
+            
+            for (int indexSll = 1; indexSll <= sal.getSillas().size()-1; indexSll++) {
+                Silla sila = sal.getSillas().get(indexSll);
+                if (indexSll==silla){
+                    sila.setDanada(false);
+                    a="Se arreglado";
+                }
+                
+                     
+                }
+        }
+        return a;
+    }
+    
+    
     
 }
 
