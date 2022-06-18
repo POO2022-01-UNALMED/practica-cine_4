@@ -5,6 +5,7 @@ from gestorAplicacion.componentes.Cliente import Cliente
 from gestorAplicacion.componentes.Cartelera import Cartelera
 from gestorAplicacion.componentes.Sala import Sala
 from gestorAplicacion.componentes.Pelicula import Pelicula
+from gestorAplicacion.componentes.Silla import Silla
 from gestorAplicacion.componentes.Trabajador import Trabajador
 
 
@@ -15,15 +16,16 @@ from gestorAplicacion.componentes.Trabajador import Trabajador
 class Funcionalidades(object):
 
     # DESERIALIZACION DE DATOS
-    #picklefile = open("./baseDeDatos/clienten","rb")
-    #picklefile2=open("./baseDeDatos/Peliculas", "rb")
-    #picklefile3=open("./baseDeDatos/Trabajadores", "rb")
+    picklefile = open("./baseDeDatos/clienten","rb")
+    picklefile2=open("./baseDeDatos/Peliculas", "rb")
+    picklefile3=open("./baseDeDatos/trabajadores", "rb")
 
-    #Cliente.setclientes(pickle.load(picklefile))
-    #Pelicula.setPeliculas(pickle.load(picklefile2))
-    #Trabajador.setTabajadores(pickle.load(picklefile3))
-    #picklefile.close()
-    #picklefile2.close()
+    Cliente.setclientes(pickle.load(picklefile))
+    Pelicula.setPeliculas(pickle.load(picklefile2))
+    Trabajador.setTabajadores(pickle.load(picklefile3))
+    picklefile.close()
+    picklefile2.close()
+    picklefile3.close()
     
     
     
@@ -139,7 +141,7 @@ class Funcionalidades(object):
   
     def PedirTrabajador( tipo):
         tra = Trabajador(0, 0, "Na", "M", 0, "Na")
-        for i in Trabajador.trabajadores:
+        for i in Trabajador.Trabajador.trabajadores:
             if i.getCargo()=="Administrador" and tipo ==1:
                 tra=i
                 
@@ -229,7 +231,7 @@ class Funcionalidades(object):
                     encontrado=True
                     if salas[i].getSillas()[j].getDanada()==True:
                         salas[i].getSillas()[j].getClientes().setCosto(2000)
-                                   
+                        salas[i].getSillas()[j].setOcupada(False)           
                     a= "se le hizo la devolucion a "+ salas[i].getSillas()[j].getClientes().getNombre()+" Total a pagar: "+str(salas[i].getSillas()[j].getClientes().getCosto()+a)
                 elif encontrado==False:
                     a="No ha comprado"
@@ -433,28 +435,32 @@ class Funcionalidades(object):
     
         
     
-    
+#-------------------------------------------------------------------------------------------------------------------------------------------------------
+    #Funcion para cuando le demos salir empiece a serializar el programa(Guarde la informacion) 
+    #     
     @staticmethod
     def salirDelSistema():
         picklefile = open("./baseDeDatos/clienten", "wb")
         picklefile2=open("./baseDeDatos/Peliculas", "wb")
-        picklefile3=open("./baseDeDatos/Trabajadores", "wb")
+        picklefile3=open("./baseDeDatos/trabajadores", "wb")
         
         pickle.dump(Cliente.clientes, picklefile)
         pickle.dump(Pelicula.peliculas, picklefile2)
         pickle.dump(Trabajador.trabajadores, picklefile3)
         picklefile.close()
+        picklefile2.close()
+        picklefile3.close()
+        
         quit()    
             
     
-     
             
-            
+ 
 
-cliente=Cliente(1,1,1,1,1)          
 
-    
-    
+
+
+
                 
                 
             
