@@ -7,6 +7,7 @@ from gestorAplicacion.componentes.Sala import Sala
 from gestorAplicacion.componentes.Pelicula import Pelicula
 from gestorAplicacion.componentes.Silla import Silla
 from gestorAplicacion.componentes.Trabajador import Trabajador
+from tkinter import messagebox as MessageBox 
 
 
 
@@ -139,9 +140,9 @@ class Funcionalidades(object):
     
     @staticmethod       
   
-    def PedirTrabajador( tipo):
-        tra = Trabajador(0, 0, "Na", "M", 0, "Na")
-        for i in Trabajador.Trabajador.trabajadores:
+    def PedirTrabajador(tipo):
+        tra = None
+        for i in Trabajador.getTrabajadores():
             if i.getCargo()=="Administrador" and tipo ==1:
                 tra=i
                 
@@ -189,7 +190,8 @@ class Funcionalidades(object):
     
     @staticmethod                    
             
-    def vericarSilla(sala, salas):
+    def vericarSilla(sala):
+        salas=Funcionalidades.inicializarSalas()
         b=None
         sal=Sala(0, [], 0, 0, 0)
      
@@ -216,7 +218,8 @@ class Funcionalidades(object):
     
     @staticmethod            
         
-    def devolucion(self, cliente,  salas):
+    def devolucion(cliente):
+        salas=Funcionalidades.inicializarSalas()
         a=""
         encontrado=False
         for i in range(1,len(salas)):
@@ -234,7 +237,7 @@ class Funcionalidades(object):
                         salas[i].getSillas()[j].setOcupada(False)           
                     a= "se le hizo la devolucion a "+ salas[i].getSillas()[j].getClientes().getNombre()+" Total a pagar: "+str(salas[i].getSillas()[j].getClientes().getCosto()+a)
                 elif encontrado==False:
-                    a="No ha comprado"
+                    a=None
         
         return a              
                            
@@ -381,18 +384,20 @@ class Funcionalidades(object):
     #Con esta funcion limpiaremos la sala mediante un trabajador
     
     @staticmethod        
-    def limpiarBasura( trabajador, sala, salas):
-        
+    def limpiarBasura( trabajador, sala):
+        a=""
+        salas=Funcionalidades.inicializarSalas()
         for i in range(len(salas)):
-            if sala==i:
-                if salas[i].getBasura()>0:
+            if sala==str(i):
+                if salas[i].getBasura()==0:
                     trabajador.setOcupado(True)
                     Funcionalidades.countdown(6)
                     trabajador.setOcupado(False)
-                    print("Se limpio la sala " +str(salas[i].getNumero())+" por "+ trabajador.getNombre())
+                    a="Se limpio la sala " +str(salas[i].getNumero())+" por "+ trabajador.getNombre()
                 
                 elif salas[i].getBasura()==0:
-                    print("La sala esta limpia")
+                    a="La sala esta limpia"
+        return a
                     
         
 #-----------------------------------------------------------------------------------
@@ -400,16 +405,18 @@ class Funcionalidades(object):
     
     @staticmethod                
     def countdown(num_of_secs):
-      
+        descripcion = MessageBox.showinfo(title = "Mensaje", message = f"Espere {num_of_secs} segundos mientras se limpia la sala",
+        detail = "la sala se esta limpiando")
         while num_of_secs:
            
             m, s = divmod(num_of_secs, 60)
             
-            print(" Se esta limpiando")
+            
             time.sleep(1)
             num_of_secs -= 1
             
-        print('Ya se limpio')
+        descripcion = MessageBox.showinfo(title = "Mensaje", message = "Enhorabuena",
+        detail = "la sala esta limpia")
     
     
 #-----------------------------------------------------------------------------------
@@ -427,9 +434,51 @@ class Funcionalidades(object):
         return a
     
 
+#-----------------------------------------------------------------------------------
+    #Con esta funcion buscaremos a un cliente en la lista de clientes(que ya hayan comprado)
+    
+    @staticmethod        
+    def buscarClien(cedula):
+        a=""
+        for i in range(len(Cliente.clientes)):
+            
+            if str(Cliente.clientes[i].getCedula())==str(cedula):
+                
+                a=Cliente.clientes[i]
+            elif a=="" and Cliente.clientes[i].getCedula()!=str(cedula):
+                a=None
+        return a
+
+#-----------------------------------------------------------------------------------
+    #Con esta funcion se cambiara la cartelera
+    
+    @staticmethod
+    def cambiarPelicula(nombre,nuevaPelicula):
+        cartelera=Funcionalidades.inicializarCartelera()
+        for i, valor in enumerate(cartelera.getPeliculas()):
+            if valor.getNombre()==nombre:
+                cartelera.getPeliculas()[i]=nuevaPelicula
+        
+        return f"Se cambio la pelicula {nombre} por {nuevaPelicula.getNombre()} "
+                
+        
 
     
-    
+#---------------------------------------------------------------------------------------------------------------------
+    @staticmethod 
+    def verCartelera(label):
+        cartelera=Funcionalidades.inicializarCartelera()
+        label["text"]+="\n-------------------------------------------------------------------------------------------------------------------------------------------------------"
+        label["text"]+="\n"+"{0:>5} {1:>22} {2:>48} {3:>40}".format("Precio", "Ano", "Pais", "Nombre"+"\n")
+        label["text"]+="----------------------------------------------------------------------------------------------------------------------------------------------------------"
+
+        i = 0
+        while i < len(cartelera.getPeliculas()):
+            label["text"]+="\n"+"{0:>5} {1:>22} {2:>38} {3:>40}".format(cartelera.getPeliculas()[i].getPrecio(), cartelera.getPeliculas()[i].getAno(),cartelera.getPeliculas()[i].getPais(),cartelera.getPeliculas()[i].getNombre())
+            i += 1
+        label["text"]+="\n----------------------------------------------------------------------------------------------------------------------------------------------------------------"
+        label["text"]+="\n"
+
     
     
     
@@ -456,6 +505,7 @@ class Funcionalidades(object):
     
             
  
+
 
 
 
