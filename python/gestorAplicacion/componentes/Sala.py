@@ -5,6 +5,7 @@ class Sala:
     sillasVIP=5
     totalSillas=20
     totalSalas=10
+    salas=[]
     def __init__(self,tipo, sillas, pelicula, trabajadores, numero):
         
         
@@ -79,6 +80,17 @@ class Sala:
      
     def setBasura(self,basura):
          self.basura+=basura
+
+    @staticmethod
+    def getSalas():
+        return Sala.salas
+    
+    @staticmethod
+    def setSalas(salas):
+        Sala.salas=salas
+        
+    
+    
          
     
     

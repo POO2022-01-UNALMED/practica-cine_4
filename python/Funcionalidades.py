@@ -8,8 +8,8 @@ from gestorAplicacion.componentes.Pelicula import Pelicula
 from gestorAplicacion.componentes.Silla import Silla
 from gestorAplicacion.componentes.Trabajador import Trabajador
 from tkinter import messagebox as MessageBox 
-
-
+from excepciones.ExceptionFormatos import ExcepcionStringNumero
+from excepciones.ExceptionFormatos import ExcepcionEnteroString
 
 
 
@@ -17,19 +17,23 @@ from tkinter import messagebox as MessageBox
 class Funcionalidades(object):
 
     # DESERIALIZACION DE DATOS
-    picklefile = open("./baseDeDatos/clienten","rb")
+    
+    picklefile = open("./baseDeDatos/clientes","rb")
     picklefile2=open("./baseDeDatos/Peliculas", "rb")
     picklefile3=open("./baseDeDatos/trabajadores", "rb")
+    picklefile4=open("./baseDeDatos/salas", "rb")
 
     Cliente.setclientes(pickle.load(picklefile))
     Pelicula.setPeliculas(pickle.load(picklefile2))
     Trabajador.setTabajadores(pickle.load(picklefile3))
+    Sala.setSalas(pickle.load(picklefile4))
     picklefile.close()
     picklefile2.close()
     picklefile3.close()
+    picklefile4.close()
     
     
-    
+     
 #--------------------------------------------------------------------------------      
     #Con esta funcion creamos las salas
     @staticmethod
@@ -73,6 +77,8 @@ class Funcionalidades(object):
     @staticmethod    
    
     def peliculas(cartelera, tipo):
+        
+        
         a=[]
         
         pelicula=cartelera.getPeliculas()
@@ -96,7 +102,7 @@ class Funcionalidades(object):
     @staticmethod   
     
     def danarSilla(sala, salas):
- 
+        
         lista=list(range(1,Sala.totalSillas))
         n=random.choice(lista)
         sal=Sala(0, [], 0, 0, 0)
@@ -120,7 +126,19 @@ class Funcionalidades(object):
     
     @staticmethod        
     def reportarSilla(silla,sala, salas):
-           
+        entero=sala.isnumeric()
+        entero2=silla.isnumeric()
+
+        if entero==False or entero2==False:
+            try:
+                raise ExcepcionStringNumero(sala)
+            except ExcepcionStringNumero as e:
+                MessageBox.showerror(title="Error",message=e)
+                return
+        else:
+            sala=int(sala)
+            silla=int(silla)
+        a=None
         for i in range(1,len(salas)):
             if sala==i:
                 sal=salas[i]
@@ -130,7 +148,9 @@ class Funcionalidades(object):
             if i==silla and sal.getNumero()==sala:
                 if sal.getSillas()[i].getDanada()==False:
                     sal.getSillas()[i].setDanada(True)
-                    return "La silla: "+str(silla)+" esta en mantenimiento"
+                    a=sal.getSillas()[i]
+        return a            
+        
                
             
             
@@ -158,6 +178,18 @@ class Funcionalidades(object):
     @staticmethod    
     
     def arreglarSilla( sala,silla, trabajador, salas):
+        entero=sala.isnumeric()
+
+        if entero==False:
+            try:
+                raise ExcepcionStringNumero(sala)
+            except ExcepcionStringNumero as e:
+                MessageBox.showerror(title="Error",message=e)
+                return
+        else:
+            sala=int(sala)
+        
+        a=None
         
         lista=list(range(1,100))
         n=random.choice(lista)     
@@ -175,9 +207,10 @@ class Funcionalidades(object):
                                     salas[i].getSillas()[j].setDanada(False)
                                     trabajador.setOcupado(False)
                                     
-                                return trabajador.getNombre()+" esta reparando la silla  "+str(silla)
+                                a=trabajador.getNombre()+" esta reparando la silla  "+str(silla)
                             else:
-                                return "La silla esta en buenas condiciones"
+                                a="La silla esta en buenas condiciones"
+        return a
                        
         
             
@@ -190,24 +223,33 @@ class Funcionalidades(object):
     
     @staticmethod                    
             
-    def vericarSilla(sala):
-        salas=Funcionalidades.inicializarSalas()
+    def vericarSilla(sala,salas):
+        entero=sala.isnumeric()
+
+        if entero==False:
+            try:
+                raise ExcepcionStringNumero(sala)
+            except ExcepcionStringNumero as e:
+                MessageBox.showerror(title="Error",message=e)
+                return
+        else:
+            sala=int(sala)
         b=None
         sal=Sala(0, [], 0, 0, 0)
      
         for i in range(1,len(salas)):
-            if sala==i:
+            if int(sala)==i:
                 sal=salas[i]
         
         for i in range(len(sal.getSillas())):
             if sal.getSillas()[i].getDanada()==True:
                 b="La silla "+str(sal.getSillas()[i].getNumero())+" en la sala "+str(sala)+" esta en dañada"
-                print(b)
+                
             
         if b==None:
-            return "Las sillas estan bien"
+            b="Las sillas estan bien"
         
-    
+        return b
    
         
         
@@ -218,8 +260,8 @@ class Funcionalidades(object):
     
     @staticmethod            
         
-    def devolucion(cliente):
-        salas=Funcionalidades.inicializarSalas()
+    def devolucion(cliente,salas):
+        
         a=""
         encontrado=False
         for i in range(1,len(salas)):
@@ -230,7 +272,7 @@ class Funcionalidades(object):
                
                 
                 if cliente.getCedula() == salas[i].getSillas()[j].getClientes().getCedula():
-                    a=Funcionalidades.pagoPelicula(i, salas)
+                    Funcionalidades.pagoPelicula(i, salas)
                     encontrado=True
                     if salas[i].getSillas()[j].getDanada()==True:
                         salas[i].getSillas()[j].getClientes().setCosto(2000)
@@ -263,6 +305,16 @@ class Funcionalidades(object):
     @staticmethod    
     
     def asiganarCliente(cliente, sala, silla,salas):
+        entero=sala.isnumeric()
+
+        if entero==False:
+            try:
+                raise ExcepcionStringNumero(sala)
+            except ExcepcionStringNumero as e:
+                MessageBox.showerror(title="Error",message=e)
+                return
+        else:
+            sala=int(sala)
         lista=list(range(1,6))
         n=random.choice(lista)
         for i in range(1,len(salas)):
@@ -275,6 +327,7 @@ class Funcionalidades(object):
                 sila=sal.getSillas()[silla.getNumero()]
                 if sila.getOcupada()==False:
                     sila.setClientes(cliente)
+                    Funcionalidades.pagoPelicula(sal.getNumero(),salas)
                     sila.setOcupada(True)
                     sal.setBasura(n)
                     Cliente.clientes.append(cliente)
@@ -340,7 +393,7 @@ class Funcionalidades(object):
 #-----------------------------------------------------------------------------------                
     #nos dara el pago de la pelicula
     @staticmethod                
-    def pagoPelicula(self, sala,salas):
+    def pagoPelicula( sala,salas):
         
         for i in range(1,len(salas)):
                 if sala==i:
@@ -352,49 +405,56 @@ class Funcionalidades(object):
     
     @staticmethod        
     def buscarSala(sala,salas):
+        a=None
         for i in range(len(salas)):
-            if sala==1:
-                return salas[i]
-        
+            if int(sala)==int(1):
+                a= salas[i]
+        return a
     
 #-----------------------------------------------------------------------------------
     #Este metodo nos dara los combos(comida) que tiene disponible la sala
     
     @staticmethod        
-    def Combos(tipo,cliente,sala,salas):
+    def Combos(tipo,cliente,sala):
+        
+        
         
         if tipo==1:
-            cliente.setCosto(5000)
-            sa=Funcionalidades.buscarSala(sala, salas)
-            sa.setBasura(10)
+            cliente.setCosto(25000)
+            
+            sala.setBasura(10)
         elif tipo==2:
-            cliente.setCosto(8000)
-            sa=Funcionalidades.buscarSala(sala, salas)
-            sa.setBasura(15)
+            cliente.setCosto(40000)
+          
+            sala.setBasura(15)
         elif tipo==3:
-            cliente.setCosto(15000)
-            sa=Funcionalidades.buscarSala(sala, salas)
-            sa.setBasura(19)
-        elif tipo==4:
-            cliente.setCosto(20000)
-            sa=Funcionalidades.buscarSala(sala, salas)
-            sa.setBasura(25)
+            cliente.setCosto(50000)           
+            
+            sala.setBasura(19)
+
+        return cliente
+        
+        
             
 #-----------------------------------------------------------------------------------
     #Con esta funcion limpiaremos la sala mediante un trabajador
     
     @staticmethod        
-    def limpiarBasura( trabajador, sala):
+    def limpiarBasura( trabajador, sala,salas):
         a=""
-        salas=Funcionalidades.inicializarSalas()
+        
         for i in range(len(salas)):
             if sala==str(i):
-                if salas[i].getBasura()==0:
+                if salas[i].getBasura()>=10:
                     trabajador.setOcupado(True)
                     Funcionalidades.countdown(6)
                     trabajador.setOcupado(False)
                     a="Se limpio la sala " +str(salas[i].getNumero())+" por "+ trabajador.getNombre()
-                
+                elif salas[i].getBasura()<10 and salas[i].getBasura() >0:
+                    trabajador.setOcupado(True)
+                    Funcionalidades.countdown(3)
+                    trabajador.setOcupado(False)
+                    a="Se limpio la sala " +str(salas[i].getNumero())+" por "+ trabajador.getNombre()
                 elif salas[i].getBasura()==0:
                     a="La sala esta limpia"
         return a
@@ -454,6 +514,15 @@ class Funcionalidades(object):
     
     @staticmethod
     def cambiarPelicula(nombre,nuevaPelicula):
+        entero=nombre.isnumeric()
+
+        if entero==True:
+            try:
+                raise ExcepcionEnteroString(nombre)
+            except ExcepcionEnteroString as e:
+                MessageBox.showerror(title="Error",message=e)
+                return                        
+        
         cartelera=Funcionalidades.inicializarCartelera()
         for i, valor in enumerate(cartelera.getPeliculas()):
             if valor.getNombre()==nombre:
@@ -465,6 +534,7 @@ class Funcionalidades(object):
 
     
 #---------------------------------------------------------------------------------------------------------------------
+    #con esta funcion mostramos en una tabla las peliculas disponibles
     @staticmethod 
     def verCartelera(label):
         cartelera=Funcionalidades.inicializarCartelera()
@@ -476,10 +546,41 @@ class Funcionalidades(object):
         while i < len(cartelera.getPeliculas()):
             label["text"]+="\n"+"{0:>5} {1:>22} {2:>38} {3:>40}".format(cartelera.getPeliculas()[i].getPrecio(), cartelera.getPeliculas()[i].getAno(),cartelera.getPeliculas()[i].getPais(),cartelera.getPeliculas()[i].getNombre())
             i += 1
-        label["text"]+="\n----------------------------------------------------------------------------------------------------------------------------------------------------------------"
+        label["text"]+="\n-------------------------------------------------------------------------------------------------------------------------------------------------------"
+        label["text"]+="\n"
+
+#---------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    #con esta funcion mostramos en una tabla de los trabajadores 
+    def verTrabajadores(label):
+        trabajadres=Trabajador.getTrabajadores()
+        label["text"]+="\n-----------------------------------------------------------------------------------------------------------------------"
+        label["text"]+="\n"+"{0:>5} {1:>13} {2:>16} {3:>20}".format("Cedula", "Cargo", "Ocupado", "Nombre"+"\n")
+        label["text"]+="-------------------------------------------------------------------------------------------------------------------------"
+
+        i = 0
+        while i < len( trabajadres):
+            label["text"]+="\n"+"{0:>5} {1:>25} {2:>26} {3:>30}".format( trabajadres[i].getCedula(),  trabajadres[i].getCargo(), trabajadres[i].isOcupado(), trabajadres[i].getNombre())
+            i += 1
+        label["text"]+="\n------------------------------------------------------------------------------------------------------------------------"
         label["text"]+="\n"
 
     
+#---------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    #con esta funcion vemos el nivel de basura de las salas
+    def verBasura(label):
+        salas=Sala.salas
+        label["text"]+="\n-----------------------------------------------------------------------------------------------------------------------"
+        label["text"]+="\n"+"{0:>5} {1:>23}".format("Sala", "Nivel de basura""\n")
+        label["text"]+="-------------------------------------------------------------------------------------------------------------------------"
+
+        i = 0
+        while i < len( salas):
+            label["text"]+="\n"+"{0:>5} {1:>25} ".format(salas[i].getNumero(), salas[i].getBasura())
+            i += 1
+        label["text"]+="\n------------------------------------------------------------------------------------------------------------------------"
+        label["text"]+="\n"
     
     
         
@@ -489,22 +590,24 @@ class Funcionalidades(object):
     #     
     @staticmethod
     def salirDelSistema():
-        picklefile = open("./baseDeDatos/clienten", "wb")
+        picklefile = open("./baseDeDatos/clientes", "wb")
         picklefile2=open("./baseDeDatos/Peliculas", "wb")
         picklefile3=open("./baseDeDatos/trabajadores", "wb")
-        
+        picklefile4=open("./baseDeDatos/salas", "wb")
         pickle.dump(Cliente.clientes, picklefile)
         pickle.dump(Pelicula.peliculas, picklefile2)
         pickle.dump(Trabajador.trabajadores, picklefile3)
+        pickle.dump(Sala.salas, picklefile4)
         picklefile.close()
         picklefile2.close()
         picklefile3.close()
-        
+        picklefile4.close()
         quit()    
             
     
             
- 
+
+
 
 
 

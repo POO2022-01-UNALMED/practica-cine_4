@@ -59,9 +59,7 @@ class ventanaInicio(tk.Tk):
         
         self.frame6 = tk.Frame(self.frame4, width=400,borderwidth=5, height=350, bg="black")
         self.frame6.grid(row = 1, column = 0)
-        self.frame6.config(relief="ridge")
-      
-        
+        self.frame6.config(relief="ridge")           
         
         
         
@@ -199,6 +197,4 @@ class ventanaInicio(tk.Tk):
         Funcionalidades.salirDelSistema()
         return super().destroy()
 
-if __name__ == "__main__":
-    ventana_inicios = ventanaInicio()
-    ventana_inicios.mainloop()
+
